@@ -1,0 +1,62 @@
+WARNING: ignoring environment value of R_HOME
+
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ###############################################
+> # rjags example to run on HPC
+> # 13.5.2016
+> # same Bayesian model as BUG_exampleHPC.R
+> 
+> # code (to run simple BUG example) taken from
+> # http://rstudio-pubs-static.s3.amazonaws.com/1935_652d6fb17d7941c4b91bbbc5a22d4494.html
+> 
+> 
+> library(rjags)
+> library(ggplot2)
+> library(coda)
+> library(reshape2)
+> 
+> # generate data
+> linedata <- list(Y = c(1, 3, 3, 3, 5), x = c(1, 2, 3, 4, 5), N = 5, xbar = 3)
+> lineinits <- function() {
++   list(alpha = 1, beta = 1, tau = 1)
++ }
+> 
+> # run model
+> lineout <- jags.model('rjags_exampleHPC.txt', data = linedata, n.chains = 2, n.adapt = 100)
+Compiling model graph
+   Resolving undeclared variables
+   Allocating nodes
+   Graph Size: 35
+
+Initializing model
+
+> n.iter <- 10000; burn.in<- n.iter/2  # no thinning and same burnin as BUG_exampleHPC.R
+> 
+> update(lineout, n.iter)  # standard to run this for 200K
+> 
+> lout<- coda.samples(lineout,  c("alpha", "beta", "sigma"), n.iter = n.iter, start = burn.in, thin = 1)
+> 
+> summary(lout)
+
+-----
+PBS Job 506303.pbs
+CPU time  : 00:00:01
+Wall time : 00:00:04
+Mem usage : 2124kb
