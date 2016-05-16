@@ -1,0 +1,11 @@
+#!/bin/bash -l
+#PBS -N rjags_exampleHPC
+#PBS -l walltime=100:00:00
+#PBS -l mem=8g
+#PBS -l ncpus=1
+
+module load R/3.0.3_gcc
+module load jags/3.4.0
+
+cd $PBS_O_WORKDIR
+R --file=/home/n9023143/R/R_HPC_tut/small_rjags_example/rjags_exampleHPC.r
