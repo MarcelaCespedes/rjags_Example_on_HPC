@@ -1,0 +1,5 @@
+Lyra: R (3.0.3) module is now loaded.
+Lyra: JAGS (3.4.0) module is now loaded.
+Lyra: Using Intel Math Kernel Library for blas and lapack.
+Error in library(rjags) : there is no package called â€˜rjagsâ€™
+Execution halted
