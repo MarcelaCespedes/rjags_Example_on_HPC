@@ -1,0 +1,28 @@
+Lyra: R (3.0.3) module is now loaded.
+Lyra: JAGS (3.4.0) module is now loaded.
+Lyra: Using Intel Math Kernel Library for blas and lapack.
+Loading required package: coda
+Loading required package: lattice
+Linked to JAGS 3.4.0
+Loaded modules: basemod,bugs
+
+ *** caught segfault ***
+address 0x3163000, cause 'memory not mapped'
+
+Traceback:
+ 1: solve.default(toeplitz(drop(xacf)[seq_len(order)]))
+ 2: solve(toeplitz(drop(xacf)[seq_len(order)]))
+ 3: ar.yw.default(x, aic = aic, order.max = order.max, na.action = na.action,     series = series, ...)
+ 4: ar.yw(x, aic = aic, order.max = order.max, na.action = na.action,     series = series, ...)
+ 5: ar(x[, i], aic = TRUE)
+ 6: spectrum0.ar(x)
+ 7: doTryCatch(return(expr), name, parentenv, handler)
+ 8: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 9: tryCatchList(expr, classes, parentenv, handlers)
+10: tryCatch(expr, error = function(e) {    call <- conditionCall(e)    if (!is.null(call)) {        if (identical(call[[1L]], quote(doTryCatch)))             call <- sys.call(-4L)        dcall <- deparse(call)[1L]        prefix <- paste("Error in", dcall, ": ")        LONG <- 75L        msg <- conditionMessage(e)        sm <- strsplit(msg, "\n")[[1L]]        w <- 14L + nchar(dcall, type = "w") + nchar(sm[1L], type = "w")        if (is.na(w))             w <- 14L + nchar(dcall, type = "b") + nchar(sm[1L],                 type = "b")        if (w > LONG)             prefix <- paste0(prefix, "\n  ")    }    else prefix <- "Error : "    msg <- paste0(prefix, conditionMessage(e), "\n")    .Internal(seterrmessage(msg[1L]))    if (!silent && identical(getOption("show.error.messages"),         TRUE)) {        cat(msg, file = stderr())        .Internal(printDeferredWarnings())    }    invisible(structure(msg, class = "try-error", condition = e))})
+11: try(spectrum0.ar(x)$spec)
+12: safespec0(x[[i]][, j])
+13: summary.mcmc.list(lout)
+14: summary(lout)
+aborting ...
+/var/spool/PBS/mom_priv/jobs/506303.pbs.SC: line 11: 22751 Segmentation fault      (core dumped) R --file=/home/n9023143/R/R_HPC_tut/small_rjags_example/rjags_exampleHPC.r
